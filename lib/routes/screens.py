@@ -12,7 +12,10 @@ from lib.exceptions.UserNotFoundException import UserNotFoundException
 
 # GET: /api/screens/getAll
 async def screens_getAll(request: Request) -> BaseHTTPResponse:
-    screens = ScreenTime().getAll(toObject=True)
+    temp = ScreenTime().getAll()
+    screens = []
+    for entry in temp:
+        screens.append(entry.toJson())
     return json({
         "status": 200,
         "screens": screens

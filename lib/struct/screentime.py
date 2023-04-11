@@ -58,6 +58,7 @@ class ScreenTime:
 
     def toJson(self):
         return {
+            "id": self.id,
             "screenTime": self.screenTime,
             "capacity": self.capacity,
             "movie": self.movie.toJson()
