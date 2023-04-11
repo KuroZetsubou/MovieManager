@@ -16,11 +16,6 @@ from lib.utils.token import TOKEN_HEADER
 # POST: /api/booking/book
 async def booking_book(request: Request) -> BaseHTTPResponse:
     body = request.json
-    if body.get("movieId") is None:
-        return json({
-            "status": 400,
-            "message": "missing movieId value"
-        }, status=400)
     if body.get("screenId") is None:
         return json({
             "status": 400,
@@ -39,9 +34,9 @@ async def booking_book(request: Request) -> BaseHTTPResponse:
             }, status=500)
 
     booking = Booking()
-    booking.movie = Movie().getById(body.get("movieId"))
     booking.user = usr
     booking.screenTime = screenTime
+    booking.movie = screenTime.movie
     booking.slots = [] if slots is None else slots
     booking.addOnDb()
     return json({

@@ -1,3 +1,4 @@
+from hashlib import sha256
 from time import time
 # project import
 from lib.mongo.collection import SCREENTIME
@@ -20,13 +21,13 @@ class ScreenTime:
     def getById(self, id: str):
         data = db.find(SCREENTIME, {"_id": id})
         if data is None:
-            raise ScreenTimeNotFoundException(f"user id {id} not found")
+            raise ScreenTimeNotFoundException(f"screentime id {id} not found")
         return self.__compileDataFromMongo(data)
     
     # gets all upcoming screens
-    def getAll(self):
+    def getAll(self, toObject: bool = False):
         data = db.findMany(SCREENTIME, {"screenTime": {"$gt": int(time())}})
-        return self.__compileListFromMongo(data)
+        return self.__compileListFromMongo(data) if not toObject else data
     
     def __compileDataFromMongo(self, mongoResult: object):
         self.screenTime = mongoResult["screenTime"]
@@ -47,10 +48,17 @@ class ScreenTime:
         return data
     
     # add this instance on database
-    def addOnDb(self, id : int):
+    def addOnDb(self):
         db.insert(SCREENTIME, {
-            "_id": id,
+            "_id": sha256(f"{self.screenTime}-{self.movie.id}-{self.capacity}".encode("utf8")).hexdigest(),
             "screenTime": self.screenTime,
             "capacity": self.capacity,
             "movie": self.movie.id,
         })
+
+    def toJson(self):
+        return {
+            "screenTime": self.screenTime,
+            "capacity": self.capacity,
+            "movie": self.movie.toJson()
+        }

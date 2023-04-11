@@ -92,3 +92,10 @@ class User:
         db.updateOne(USER, {"_id": self.id}, {"$set": {"tokens": self.tokens}})
         pass
         
+    def toJson(self):
+        return {
+            "username": self.username,
+            "usertype": self.usertype,
+            "firstName": self.firstName,
+            "lastname": self.lastname
+        }

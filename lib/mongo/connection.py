@@ -37,3 +37,15 @@ class MongoConnection:
     def deleteOne(self, collectionName: str, filter: object) -> DeleteResult:
         colle = self.getCollection(collectionName=collectionName)
         return colle.delete_one(filter=filter)
+    
+    def random(self, collectionName: str) -> object:
+        colle = self.getCollection(collectionName=collectionName)
+        result = colle.aggregate([{ "$sample": { "size": 1 } }])
+        b = None
+        for a in result:
+            b = a
+        return b
+    
+    def drop(self, collectionName: str):
+        self.getCollection(collectionName=collectionName).drop()
+        pass

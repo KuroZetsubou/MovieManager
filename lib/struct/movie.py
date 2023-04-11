@@ -1,3 +1,4 @@
+from hashlib import sha256
 from enum import Enum
 
 # project import
@@ -30,16 +31,25 @@ class Movie:
             raise MovieNotFoundException(f"movie {movieName} not found")
         return self.__compileDataFromMongo(data)
     
+    def getRandom(self):
+        data = db.random(MOVIE)
+        return self.__compileDataFromMongo(data)
+    
     def __compileDataFromMongo(self, mongoResult: object):
         self.movieName = mongoResult["movieName"]
         self.omdbName = mongoResult["omdbName"]
         self.id = mongoResult["_id"]
         return self
 
-    def addOnDb(self, id: int):
+    def addOnDb(self):
         db.insert(MOVIE, {
-            "_id": id,
+            "_id": sha256(f"{self.movieName}-{self.omdbName}".encode("utf8")).hexdigest(),
             "movieName": self.movieName,
             "omdbName": self.omdbName
         })
     
+    def toJson(self):
+        return {
+            "movieName": self.movieName,
+            "omdbName": self.omdbName
+        }

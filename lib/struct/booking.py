@@ -44,8 +44,6 @@ class Booking:
     
     def getByScreenTime(self, screenTime: ScreenTime) -> list:
         data = db.findMany(BOOKING, {"screenTime": screenTime.id})
-        if data.__len__() == 0:
-            raise BookingNotFoundException(f"booking for movie {screenTime.id} not found")
         return self.__compileListFromMongo(data)
     
     def pay(self):
@@ -60,9 +58,9 @@ class Booking:
         db.updateOne(BOOKING, {"$set": {"isCancelled": True, "cancellingTime": int(time())}})
         pass
     
-    def getByUserId(self, id: int) -> list:
+    def getByUserId(self, id: int, toObject: bool = False) -> list:
         data = db.findMany(BOOKING, {"user": id})
-        return self.__compileListFromMongo(data)
+        return self.__compileListFromMongo(data) if not toObject else data
     
     def __compileDataFromMongo(self, mongoResult: object):
         self.paid = mongoResult["paid"]
@@ -71,6 +69,10 @@ class Booking:
         self.user = User().getById(mongoResult["user"])
         self.movie = Movie().getById(mongoResult["movie"])
         self.screenTime = ScreenTime().getById(mongoResult["screenTime"])
+        self.bookingTime = mongoResult["bookingTime"]
+        self.isCancelled = mongoResult["isCancelled"]
+        self.cancellingTime = mongoResult["cancellingTime"]
+        self.paidTime = mongoResult["paidTime"]
         return self
     
     def __compileDataFromMongoAsExternal(self, mongoResult: object):
@@ -97,4 +99,17 @@ class Booking:
             'cancellingTime': None,
             'paidTime': None,
         })
+
+    def toJson(self):
+        return {
+            "user": self.user.toJson(),
+            "movie": self.movie.toJson(),
+            "screenTime": self.screenTime.toJson(),
+            "bookingTime": self.bookingTime,
+            "isCancelled": self.isCancelled,
+            "cancellingTime": self.cancellingTime,
+            "paidTime": self.paidTime,
+            "slots": self.slots,
+            "paid": self.paid
+        }
     

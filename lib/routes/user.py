@@ -61,7 +61,10 @@ async def user_getBookings(request: Request) -> BaseHTTPResponse:
     if user is None:
         raise UserNotFoundException("user not found")
     bookings = Booking().getByUserId(user.id)
+    _b = []
+    for booking in bookings:
+        _b.append(booking.toJson())
     return json({
         "status": 200,
-        "bookings": bookings
+        "bookings": _b
     })

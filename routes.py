@@ -7,7 +7,6 @@ from sanic.response import json, BaseHTTPResponse
 from sanic.exceptions import NotFound
 
 # Lib import
-from lib.omdb_api import OMDbApiWrapper
 from lib.exceptions.UserExistsException import UserExistsException
 from lib.exceptions.BookingNotFoundException import BookingNotFoundException
 from lib.exceptions.UserNotFoundException import UserNotFoundException
@@ -17,15 +16,14 @@ from lib.utils.token import checkToken, TOKEN_HEADER
 
 # routes import
 from lib.routes.booking import booking_book, booking_pay, booking_internalPayment
-from lib.routes.screens import screens_getAll
+from lib.routes.screens import screens_getAll, screens_get
 from lib.routes.user import user_makeAccount, user_login, user_getBookings
-
-omdb_api = OMDbApiWrapper()
 
 BYPASS_TOKEN_CHECK = [
     "/api/user/makeAccount",
     "/api/user/login",
-    "/api/screens/getAll"
+    "/api/screens/getAll",
+    "/api/screens/get"
 ]
 
 # some first inits
@@ -61,13 +59,14 @@ def add_external_routes(app):
     app.add_route(test, '/', methods=["GET"])
     app.add_route(user_getBookings, "/api/user/getBookings", methods=["GET"])
     app.add_route(screens_getAll, "/api/screens/getAll", methods=["GET"])
+    app.add_route(screens_get, "/api/screens/get", methods=["GET"])
 
     # POST
-    app.add_route(user_makeAccount, "/api/user/makeAccount", methods=["POST"])
-    app.add_route(user_login, "/api/user/login", methods=["POST"])
     app.add_route(booking_book, "/api/booking/book", methods=["POST"])
     app.add_route(booking_pay, "/api/booking/pay", methods=["POST"])
     app.add_route(booking_internalPayment, "/api/booking/internalPayment", methods=["POST"])
+    app.add_route(user_makeAccount, "/api/user/makeAccount", methods=["POST"])
+    app.add_route(user_login, "/api/user/login", methods=["POST"])
     
     # NotFound
     app.error_handler.add(NotFound, ignore_404s)
