@@ -1,0 +1,376 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2023-04-11T16:57:33.399Z",
+    "__export_source": "insomnia.desktop.app:v2023.1.0",
+    "resources": [{
+            "_id": "req_487968224c0b4439abcf2f1a6150b221",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681232205151,
+            "created": 1681203902901,
+            "url": "http://localhost/",
+            "name": "hello",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [{
+                "id": "pair_07b31967fe3f47bab74cdd6c2af5511f",
+                "name": "X-Token",
+                "value": "50bf62e2-0819-4813-84f9-ffb05c769cc6",
+                "description": ""
+            }],
+            "authentication": {},
+            "metaSortKey": 100,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "parentId": null,
+            "modified": 1681203899397,
+            "created": 1681203899397,
+            "name": "MovieManager",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_d05e2e4bc6d54bf08ffc60b77e4b210c",
+            "parentId": "fld_00e56bea88384bb8b6c6ccb2cdef357c",
+            "modified": 1681232205156,
+            "created": 1681230338285,
+            "url": "http://localhost/api/booking/book",
+            "name": "booking/book",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"screenId\": \"a94a1dfbe4318a33fc8165b13536754bda30ead63d8ce59d9e15f47630422870\"\n}"
+            },
+            "parameters": [{
+                "id": "pair_65b3dcc1a9aa47c6aacf0d593529a79e",
+                "name": "",
+                "value": "",
+                "description": ""
+            }],
+            "headers": [{
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_22ff4efc83e943e6b667eb4f00315285"
+                },
+                {
+                    "id": "pair_ea9e14fd025c410fb09b5276a5f02cdd",
+                    "name": "X-Token",
+                    "value": "50bf62e2-0819-4813-84f9-ffb05c769cc6",
+                    "description": ""
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": 0,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_00e56bea88384bb8b6c6ccb2cdef357c",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681232205151,
+            "created": 1681232142759,
+            "name": "booking",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": 0,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_c3f7820f68e34b8ba2f10efbdadbc506",
+            "parentId": "fld_00e56bea88384bb8b6c6ccb2cdef357c",
+            "modified": 1681232205156,
+            "created": 1681231067518,
+            "url": "http://localhost/api/booking/pay",
+            "name": "booking/pay",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"bookingId\": \"8b299c3ad1d6fda6d23ba706291f90bf09a79fa10c4473bd383daba5b612d4ef\"\n}"
+            },
+            "parameters": [],
+            "headers": [{
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_334a9ba263c54304b9ffd44f27c14a01"
+                },
+                {
+                    "id": "pair_342ad9b4bd3745c0959a2358f16a0e98",
+                    "name": "X-Token",
+                    "value": "50bf62e2-0819-4813-84f9-ffb05c769cc6",
+                    "description": ""
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": 200,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_1f63a2ab28df46d8b07ba216c4d1a530",
+            "parentId": "fld_00e56bea88384bb8b6c6ccb2cdef357c",
+            "modified": 1681232205156,
+            "created": 1681231762420,
+            "url": "http://localhost/api/booking/internalPayment",
+            "name": "booking/internalPayment",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"bookingId\": \"8b299c3ad1d6fda6d23ba706291f90bf09a79fa10c4473bd383daba5b612d4ef\"\n}"
+            },
+            "parameters": [],
+            "headers": [{
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_334a9ba263c54304b9ffd44f27c14a01"
+                },
+                {
+                    "id": "pair_342ad9b4bd3745c0959a2358f16a0e98",
+                    "name": "X-Token",
+                    "value": "50bf62e2-0819-4813-84f9-ffb05c769cc6",
+                    "description": ""
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": 100,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_0b0a459babae4351ac8bdbdacc73b411",
+            "parentId": "fld_ffc0049411d04df08f5abcf034a53f86",
+            "modified": 1681232205156,
+            "created": 1681222958025,
+            "url": "http://localhost/api/screens/getAll",
+            "name": "screens/getAll",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [{
+                "id": "pair_86c059c865a5447190fd00c452b5f724",
+                "name": "",
+                "value": "",
+                "description": ""
+            }],
+            "authentication": {},
+            "metaSortKey": 100,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_ffc0049411d04df08f5abcf034a53f86",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681232205151,
+            "created": 1681232181481,
+            "name": "screens",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": 200,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_54239566d6cf4493a70d1d473ce58791",
+            "parentId": "fld_ffc0049411d04df08f5abcf034a53f86",
+            "modified": 1681232205156,
+            "created": 1681223004698,
+            "url": "http://localhost/api/screens/get",
+            "name": "screens/get",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [{
+                "id": "pair_337331e6452347f9ae557b183f83dba7",
+                "name": "screenId",
+                "value": "a94a1dfbe4318a33fc8165b13536754bda30ead63d8ce59d9e15f47630422870",
+                "description": ""
+            }],
+            "headers": [{
+                "id": "pair_86c059c865a5447190fd00c452b5f724",
+                "name": "",
+                "value": "",
+                "description": ""
+            }],
+            "authentication": {},
+            "metaSortKey": 0,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_3c1a12a9aaa24d3090699f401ee3b45b",
+            "parentId": "fld_bc9d04829b98421396eadb46cd812e3b",
+            "modified": 1681232205156,
+            "created": 1681203920428,
+            "url": "http://localhost/api/user/makeAccount",
+            "name": "user/makeAccount",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+            },
+            "parameters": [],
+            "headers": [{
+                "name": "Content-Type",
+                "value": "application/json"
+            }],
+            "authentication": {},
+            "metaSortKey": 200,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_bc9d04829b98421396eadb46cd812e3b",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681232205151,
+            "created": 1681232195248,
+            "name": "user",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": 300,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_458dc920403e42b7a0e7b964e4afff4e",
+            "parentId": "fld_bc9d04829b98421396eadb46cd812e3b",
+            "modified": 1681232205156,
+            "created": 1681214281377,
+            "url": "http://localhost/api/user/login",
+            "name": "user/login",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+            },
+            "parameters": [],
+            "headers": [{
+                "name": "Content-Type",
+                "value": "application/json"
+            }],
+            "authentication": {},
+            "metaSortKey": 100,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_3ed343c099d845a091457b057ff037e7",
+            "parentId": "fld_bc9d04829b98421396eadb46cd812e3b",
+            "modified": 1681232205156,
+            "created": 1681218311307,
+            "url": "http://localhost/api/user/getBookings",
+            "name": "user/getBookings",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [{
+                "id": "pair_0c191fc102e2461fb8b33b59392213ac",
+                "name": "X-Token",
+                "value": "50bf62e2-0819-4813-84f9-ffb05c769cc6",
+                "description": ""
+            }],
+            "authentication": {},
+            "metaSortKey": 0,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "env_bd2b751d43796d14afc0ee7a08d002361311291f",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681231713588,
+            "created": 1681203899404,
+            "name": "Base Environment",
+            "data": {},
+            "dataPropertyOrder": {},
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1681203899404,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_bd2b751d43796d14afc0ee7a08d002361311291f",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681203899405,
+            "created": 1681203899405,
+            "name": "Default Jar",
+            "cookies": [],
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_4eb2415189fc4afc9ca305f749d573b5",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681203899397,
+            "created": 1681203899397,
+            "fileName": "MovieManager",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        }
+    ]
+}
