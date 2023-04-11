@@ -49,7 +49,7 @@ class Booking:
     def pay(self):
         if self.id is None:
             raise Exception("booking is not initialized by database")
-        db.updateOne(BOOKING, {"$set": {"paid": True, "paidTime": int(time())}})
+        db.updateOne(BOOKING, {"_id": self.id}, {"$set": {"paid": True, "paidTime": int(time())}})
         pass
 
     def cancelBooking(self):
@@ -102,6 +102,7 @@ class Booking:
 
     def toJson(self):
         return {
+            "bookingId": self.id,
             "user": self.user.toJson(),
             "movie": self.movie.toJson(),
             "screenTime": self.screenTime.toJson(),

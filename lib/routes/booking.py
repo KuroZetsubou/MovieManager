@@ -1,4 +1,5 @@
 from time import time
+from pymongo.errors import DuplicateKeyError
 
 # sanic import
 from sanic.request import Request
@@ -38,11 +39,17 @@ async def booking_book(request: Request) -> BaseHTTPResponse:
     booking.screenTime = screenTime
     booking.movie = screenTime.movie
     booking.slots = [] if slots is None else slots
-    booking.addOnDb()
-    return json({
-        "status": 200,
-        "message": "ok"
-    })
+    try:
+        booking.addOnDb()
+        return json({
+            "status": 200,
+            "message": "ok"
+        })
+    except DuplicateKeyError:
+        return json({
+            "status": 500,
+            "message": "you already booked for this screening"
+        }, status=500)
 
 # POST: /api/booking/pay
 async def booking_pay(request: Request) -> BaseHTTPResponse:
@@ -59,6 +66,11 @@ async def booking_pay(request: Request) -> BaseHTTPResponse:
             "message": "endpoint reserved for clients paying. for employee use /api/booking/internalPayment"
         }, status=403)
     booking = Booking().getById(body.get("bookingId"))
+    if booking.paid:
+        return json({
+            "status": 500,
+            "message": "booking already paid"
+        }, status=500)
     booking.pay()
     return json({
         "status": 200,
@@ -80,6 +92,11 @@ async def booking_internalPayment(request: Request) -> BaseHTTPResponse:
             "message": "endpoint reserved for clients paying. for clients use /api/booking/pay"
         }, status=403)
     booking = Booking().getById(body.get("bookingId"))
+    if booking.paid:
+        return json({
+            "status": 500,
+            "message": "booking already paid"
+        }, status=500)
     booking.pay()
     return json({
         "status": 200,
