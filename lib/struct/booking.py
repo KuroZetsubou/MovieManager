@@ -1,4 +1,6 @@
-from enum import Enum
+from hashlib import sha256
+from time import time
+from pymongo.errors import DuplicateKeyError
 
 # project import
 from lib.mongo.collection import BOOKING
@@ -22,6 +24,10 @@ class Booking:
         self.paid = paid
         self.slots = slots
         self.id = None
+        self.bookingTime = None
+        self.isCancelled = False
+        self.cancellingTime = None
+        self.paidTime = None
         pass
 
     def getById(self, id: int):
@@ -41,6 +47,18 @@ class Booking:
         if data.__len__() == 0:
             raise BookingNotFoundException(f"booking for movie {screenTime.id} not found")
         return self.__compileListFromMongo(data)
+    
+    def pay(self):
+        if self.id is None:
+            raise Exception("booking is not initialized by database")
+        db.updateOne(BOOKING, {"$set": {"paid": True, "paidTime": int(time())}})
+        pass
+
+    def cancelBooking(self):
+        if self.id is None:
+            raise Exception("booking is not initialized by database")
+        db.updateOne(BOOKING, {"$set": {"isCancelled": True, "cancellingTime": int(time())}})
+        pass
     
     def getByUserId(self, id: int) -> list:
         data = db.findMany(BOOKING, {"user": id})
@@ -65,13 +83,18 @@ class Booking:
             data.append(self.__compileDataFromMongoAsExternal(entry))
         return data
 
-    def addOnDb(self, id: int):
+    def addOnDb(self):
+        now = int(time())
         db.insert(BOOKING, {
-            "_id": id,
+            "_id": sha256(f"{self.screenTime.id}-{self.user.id}-{self.movie.id}".encode("utf8")).hexdigest(),
             "paid": self.paid,
             "slots": self.slots,
             "user": self.user.id,
             "movie": self.movie.id,
-            "screenTime": self.screenTime.id
+            "screenTime": self.screenTime.id,
+            "bookingTime": now,
+            "isCancelled": self.isCancelled,
+            'cancellingTime': None,
+            'paidTime': None,
         })
     

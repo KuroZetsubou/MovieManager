@@ -1,3 +1,4 @@
+from time import time
 # project import
 from lib.mongo.collection import SCREENTIME
 from lib.exceptions.ScreenTimeNotFoundException import ScreenTimeNotFoundException
@@ -22,6 +23,11 @@ class ScreenTime:
             raise ScreenTimeNotFoundException(f"user id {id} not found")
         return self.__compileDataFromMongo(data)
     
+    # gets all upcoming screens
+    def getAll(self):
+        data = db.findMany(SCREENTIME, {"screenTime": {"$gt": int(time())}})
+        return self.__compileListFromMongo(data)
+    
     def __compileDataFromMongo(self, mongoResult: object):
         self.screenTime = mongoResult["screenTime"]
         self.capacity = mongoResult["capacity"]
@@ -29,6 +35,16 @@ class ScreenTime:
         self.movie = self.movie.getById(mongoResult["movie"])
         self.id = mongoResult["_id"]
         return self
+    
+    def __compileDataFromMongoAsExternal(self, mongoResult: object):
+        obj = ScreenTime()
+        return obj.__compileDataFromMongo(mongoResult)
+    
+    def __compileListFromMongo(self, mongoList: list) -> list:
+        data = []
+        for entry in mongoList:
+            data.append(self.__compileDataFromMongoAsExternal(entry))
+        return data
     
     # add this instance on database
     def addOnDb(self, id : int):
