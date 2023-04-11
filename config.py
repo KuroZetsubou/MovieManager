@@ -12,3 +12,6 @@ MONGO_DB   = "MovieManager"
 SANIC_HOST  = "0.0.0.0"
 SANIC_PORT  = 80
 SANIC_DEBUG = False
+
+# Application settings
+BOOKING_MAX_TIME_BEFORE = 3600 # amount of seconds before the screen time. gap allowed for clients before having it unavailable. it's bypassed only by employees (for local purchase of tickets)

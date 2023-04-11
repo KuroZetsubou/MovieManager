@@ -1,15 +1,17 @@
+from time import time
+
 # sanic import
 from sanic.request import Request
 from sanic.response import json, BaseHTTPResponse
 
 # project import
+import config
 from lib.struct.__base import db
 from lib.struct.user import User, UserType
 from lib.struct.booking import Booking
 from lib.struct.screentime import ScreenTime
 from lib.struct.screentime import Movie
-from lib.utils.token import generateToken, getUserByToken, TOKEN_HEADER
-from lib.exceptions.UserNotFoundException import UserNotFoundException
+from lib.utils.token import TOKEN_HEADER
 
 # POST: /api/booking/book
 async def booking_book(request: Request) -> BaseHTTPResponse:
@@ -25,11 +27,21 @@ async def booking_book(request: Request) -> BaseHTTPResponse:
             "message": "missing screenId value"
         }, status=400)
     slots = body.get("slots")
+    screenTime = ScreenTime().getById(body.get("screenId"))
+    now = int(time())
     usr = User().getByToken(request.headers.get(TOKEN_HEADER))
+
+    if screenTime.screenTime - config.BOOKING_MAX_TIME_BEFORE < now:
+        if usr.usertype == UserType.CLIENT:
+            return json({
+                "status": 500,
+                "message": "cannot book now. please contact the theatre for booking."
+            }, status=500)
+
     booking = Booking()
     booking.movie = Movie().getById(body.get("movieId"))
     booking.user = usr
-    booking.screenTime = ScreenTime().getById(body.get("screenId"))
+    booking.screenTime = screenTime
     booking.slots = [] if slots is None else slots
     booking.addOnDb()
     return json({
