@@ -1,5 +1,5 @@
 # OMDB API Key (get from http://www.omdbapi.com/apikey.aspx)
-API_KEY_OMDB = "90804535"
+API_KEY_OMDB = ""
 
 # MongoDB wrapper
 MONGO_HOST = "0.0.0.0"
