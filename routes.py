@@ -18,11 +18,17 @@ from lib.exceptions.BookingNotFoundException import BookingNotFoundException
 from lib.exceptions.UserNotFoundException import UserNotFoundException
 from lib.exceptions.ScreenTimeNotFoundException import ScreenTimeNotFoundException
 from lib.exceptions.MovieNotFoundException import MovieNotFoundException
+from lib.utils.token import checkToken
 
 # routes import
-from lib.routes.user import user_makeAccount
+from lib.routes.user import user_makeAccount, user_login
 
 omdb_api = OMDbApiWrapper()
+
+BYPASS_TOKEN_CHECK = [
+    "/api/user/makeAccount",
+    "/api/user/login"
+]
 
 # some first inits
 NOT_FOUND = json({
@@ -37,19 +43,19 @@ async def ignore_404s(request: Request, exception: Exception):
     return json({
         "status": 404,
         "message": f"not found - {request.url}"
-    })
+    }, status=404)
 
 async def user_exists(request: Request, exception: Exception):
     return json({
         "status": 401,
         "message": f"user {exception.username} already exists. did you forget the password?"
-    })
+    }, status=401)
 
 async def data_not_found(request: Request, exception: Exception):
     return json({
         "status": 404,
         "message": exception.message
-    })
+    }, status=400)
 
 # init routes
 def add_external_routes(app):
@@ -58,6 +64,7 @@ def add_external_routes(app):
 
     # POST
     app.add_route(user_makeAccount, "/api/user/makeAccount", methods=["POST"])
+    app.add_route(user_login, "/api/user/login", methods=["POST"])
 
     # NotFound
     app.error_handler.add(NotFound, ignore_404s)
@@ -74,4 +81,17 @@ def add_external_routes(app):
 
     @app.middleware('request')
     async def prerequest(request: Request):
+        token_bypass = BYPASS_TOKEN_CHECK.__contains__(request.path)
+        if not token_bypass:
+            token = request.headers.get("X-Token")
+            if token is None:
+                return json({
+                    "status": 401,
+                    "message": "missing token"
+                }, status=403)
+            if not checkToken(token):
+                return json({
+                    "status": 403,
+                    "message": "invalid token"
+                }, status=403)
         pass

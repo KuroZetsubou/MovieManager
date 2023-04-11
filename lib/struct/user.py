@@ -78,3 +78,11 @@ class User:
     
     def checkPasswordFromPlaintext(self, plaintextPassword: str) -> bool:
         return self.__securePassword(plaintextPassword) == self.password
+
+    def addToken(self, token: str):
+        if self.id is None:
+            raise Exception("user is not defined from mongo.")
+        self.tokens.append(token)
+        db.updateOne(USER, {"_id": self.id}, {"$set": {"tokens": self.tokens}})
+        pass
+        
