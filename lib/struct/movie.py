@@ -18,19 +18,19 @@ class Movie:
         self.id = None
         pass
 
-    def getById(self, id: int) -> Movie:
+    def getById(self, id: int):
         data = db.find(MOVIE, {"_id": id})
         if data is None:
             raise MovieNotFoundException(f"movie id {id} not found")
         return self.__compileDataFromMongo(data)
     
-    def getByMovieName(self, movieName: str) -> Movie:
+    def getByMovieName(self, movieName: str):
         data = db.find(MOVIE, {"movieName": movieName})
         if data is None:
             raise MovieNotFoundException(f"movie {movieName} not found")
         return self.__compileDataFromMongo(data)
     
-    def __compileDataFromMongo(self, mongoResult: object) -> Movie:
+    def __compileDataFromMongo(self, mongoResult: object):
         self.movieName = mongoResult["movieName"]
         self.omdbName = mongoResult["omdbName"]
         self.id = mongoResult["_id"]

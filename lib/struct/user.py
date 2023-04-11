@@ -46,6 +46,12 @@ class User:
             raise UserNotFoundException(f"username {username} not found")
         return self.__compileDataFromMongo(data)
 
+    def getByToken(self, token: str):
+        usr = db.find(USER, {"tokens": token})
+        if usr is None:
+            return None
+        return self.__compileDataFromMongo(usr)
+
     def __compileDataFromMongo(self, mongoResult: object):
         self.username = mongoResult["username"]
         self.password = mongoResult["password"]

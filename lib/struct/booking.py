@@ -24,7 +24,7 @@ class Booking:
         self.id = None
         pass
 
-    def getById(self, id: int) -> Booking:
+    def getById(self, id: int):
         data = db.find(BOOKING, {"_id": id})
         if data is None:
             raise BookingNotFoundException(f"booking id {id} not found")
@@ -42,7 +42,11 @@ class Booking:
             raise BookingNotFoundException(f"booking for movie {screenTime.id} not found")
         return self.__compileListFromMongo(data)
     
-    def __compileDataFromMongo(self, mongoResult: object) -> Booking:
+    def getByUserId(self, id: int) -> list:
+        data = db.findMany(BOOKING, {"user": id})
+        return self.__compileListFromMongo(data)
+    
+    def __compileDataFromMongo(self, mongoResult: object):
         self.paid = mongoResult["paid"]
         self.slots = mongoResult["slots"]
         self.id = mongoResult["_id"]
@@ -51,7 +55,7 @@ class Booking:
         self.screenTime = ScreenTime().getById(mongoResult["screenTime"])
         return self
     
-    def __compileDataFromMongoAsExternal(self, mongoResult: object) -> Booking:
+    def __compileDataFromMongoAsExternal(self, mongoResult: object):
         booking = Booking()
         return booking.__compileDataFromMongo(mongoResult)
     

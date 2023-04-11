@@ -18,10 +18,10 @@ from lib.exceptions.BookingNotFoundException import BookingNotFoundException
 from lib.exceptions.UserNotFoundException import UserNotFoundException
 from lib.exceptions.ScreenTimeNotFoundException import ScreenTimeNotFoundException
 from lib.exceptions.MovieNotFoundException import MovieNotFoundException
-from lib.utils.token import checkToken
+from lib.utils.token import checkToken, TOKEN_HEADER
 
 # routes import
-from lib.routes.user import user_makeAccount, user_login
+from lib.routes.user import user_makeAccount, user_login, user_getBookings
 
 omdb_api = OMDbApiWrapper()
 
@@ -61,11 +61,12 @@ async def data_not_found(request: Request, exception: Exception):
 def add_external_routes(app):
     # GET
     app.add_route(test, '/', methods=["GET"])
+    app.add_route(user_getBookings, "/api/user/getBookings", methods=["GET"])
 
     # POST
     app.add_route(user_makeAccount, "/api/user/makeAccount", methods=["POST"])
     app.add_route(user_login, "/api/user/login", methods=["POST"])
-
+    
     # NotFound
     app.error_handler.add(NotFound, ignore_404s)
     app.error_handler.add(UserExistsException, user_exists)
@@ -83,7 +84,7 @@ def add_external_routes(app):
     async def prerequest(request: Request):
         token_bypass = BYPASS_TOKEN_CHECK.__contains__(request.path)
         if not token_bypass:
-            token = request.headers.get("X-Token")
+            token = request.headers.get(TOKEN_HEADER)
             if token is None:
                 return json({
                     "status": 401,

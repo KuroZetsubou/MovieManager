@@ -16,13 +16,13 @@ class ScreenTime:
         self.capacity = capacity
         pass
 
-    def getById(self, id: str) -> ScreenTime:
+    def getById(self, id: str):
         data = db.find(SCREENTIME, {"_id": id})
         if data is None:
             raise ScreenTimeNotFoundException(f"user id {id} not found")
         return self.__compileDataFromMongo(data)
     
-    def __compileDataFromMongo(self, mongoResult: object) -> ScreenTime:
+    def __compileDataFromMongo(self, mongoResult: object):
         self.screenTime = mongoResult["screenTime"]
         self.capacity = mongoResult["capacity"]
         self.movie = Movie()

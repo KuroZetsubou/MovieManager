@@ -5,7 +5,9 @@ from sanic.response import json, BaseHTTPResponse
 # project import
 from lib.struct.__base import db
 from lib.struct.user import User, UserType
-from lib.utils.token import generateToken
+from lib.struct.booking import Booking
+from lib.utils.token import generateToken, getUserByToken, TOKEN_HEADER
+from lib.exceptions.UserNotFoundException import UserNotFoundException
 
 # POST: /api/user/makeAccount
 async def user_makeAccount(request: Request) -> BaseHTTPResponse:
@@ -29,6 +31,7 @@ async def user_makeAccount(request: Request) -> BaseHTTPResponse:
         "message": f"user {user.username} created"
     })
 
+# POST: /api/user/login
 async def user_login(request: Request) -> BaseHTTPResponse:
     body = request.json
     if body.get("username") is None or body.get("password") is None:
@@ -51,3 +54,14 @@ async def user_login(request: Request) -> BaseHTTPResponse:
             "status": 401,
             "message": "invalid credentials"
         }, status=401)
+    
+# GET: /api/user/getBookings
+async def user_getBookings(request: Request) -> BaseHTTPResponse:
+    user = getUserByToken(request.headers.get(TOKEN_HEADER))
+    if user is None:
+        raise UserNotFoundException("user not found")
+    bookings = Booking().getByUserId(user.id)
+    return json({
+        "status": 200,
+        "bookings": bookings
+    })
