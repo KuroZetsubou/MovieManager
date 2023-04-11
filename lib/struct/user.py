@@ -1,15 +1,17 @@
 from hashlib import sha256
-from enum import Enum
+from enum import IntEnum
+from pymongo.errors import DuplicateKeyError
 
 # project import
 import config
 from lib.mongo.connection import MongoConnection
 from lib.mongo.collection import USER
 from lib.exceptions.UserNotFoundException import UserNotFoundException
+from lib.exceptions.UserExistsException import UserExistsException
 
 db = MongoConnection(f"mongodb://{config.MONGO_HOST}:{config.MONGO_PORT}", config.MONGO_DB)
 
-class UserType(Enum):
+class UserType(IntEnum):
     ADMIN = 1
     EMPLOYEE = 2
     CLIENT = 3
@@ -32,19 +34,19 @@ class User:
         self.id = None
         pass
 
-    def getById(self, id: str) -> User:
+    def getById(self, id: str):
         data = db.find(USER, {"_id": id})
         if data is None:
             raise UserNotFoundException(f"user id {id} not found")
         return self.__compileDataFromMongo(data)
 
-    def getByUsername(self, username: str) -> User:
+    def getByUsername(self, username: str):
         data = db.find(USER, {"username": username})
         if data is None:
             raise UserNotFoundException(f"username {username} not found")
         return self.__compileDataFromMongo(data)
 
-    def __compileDataFromMongo(self, mongoResult: object) -> User:
+    def __compileDataFromMongo(self, mongoResult: object):
         self.username = mongoResult["username"]
         self.password = mongoResult["password"]
         self.usertype = mongoResult["usertype"]
@@ -56,14 +58,18 @@ class User:
 
     # add this instance on database
     def addOnDb(self):
-        db.insert(USER, {
-            "_id": sha256(self.username).hexdigest(),
-            "username": self.username,
-            "password": self.__securePassword(self.password),
-            "usertype": self.usertype,
-            "firstName": self.firstName,
-            "tokens": self.tokens,
-        })
+        try:
+            db.insert(USER, {
+                "_id": sha256(self.username.encode("utf8")).hexdigest(),
+                "username": self.username,
+                "password": self.__securePassword(self.password),
+                "usertype": self.usertype,
+                "firstName": self.firstName,
+                "lastname": self.lastname,
+                "tokens": self.tokens,
+            })
+        except DuplicateKeyError:
+            raise UserExistsException(username=self.username)
 
     # TODO
     # can be used also for verification

@@ -3,10 +3,8 @@ from sanic.request import Request
 from sanic.response import json, BaseHTTPResponse
 
 # project import
-import config
-from lib.mongo.connection import MongoConnection
-
-db = MongoConnection(f"mongodb://{config.MONGO_HOST}:{config.MONGO_PORT}", config.MONGO_DB)
+from lib.struct.__base import db
+from lib.struct.user import User, UserType
 
 # POST: /api/user/makeAccount
 async def user_makeAccount(request: Request) -> BaseHTTPResponse:
@@ -16,8 +14,16 @@ async def user_makeAccount(request: Request) -> BaseHTTPResponse:
             "status": 400,
             "message": "invalid request - missing username or password on body"
         })
-    print(db)
+    # compiling struct
+    user = User()
+    user.username = body.get("username")
+    user.password = body.get("password")
+    user.usertype = UserType.CLIENT
+    user.firstName = body.get("firstName")
+    user.lastname = body.get("lastname")
+    user.addOnDb()
+    # return success
     return json({
         "status": 200,
-        "message": "db is connected and reachable"
+        "message": f"user {user.username} created"
     })
