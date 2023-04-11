@@ -1,4 +1,4 @@
-MOVIE    = "movie"
-USER     = "user"
-BOOKING  = "booking"
-PURCHASE = "purchase"
+MOVIE      = "movie"
+USER       = "user"
+BOOKING    = "booking"
+SCREENTIME = "screenTime"
