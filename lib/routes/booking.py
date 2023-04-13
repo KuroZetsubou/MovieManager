@@ -89,7 +89,7 @@ async def booking_internalPayment(request: Request) -> BaseHTTPResponse:
     if usr.usertype != UserType.EMPLOYEE and usr.usertype != UserType.ADMIN:
         return json({
             "status": 403,
-            "message": "endpoint reserved for clients paying. for clients use /api/booking/pay"
+            "message": "endpoint reserved for internal paying. for clients use /api/booking/pay"
         }, status=403)
     booking = Booking().getById(body.get("bookingId"))
     if booking.paid:

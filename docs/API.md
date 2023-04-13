@@ -67,3 +67,32 @@ Token must be put as a dedicated header on your HTTP request, `X-Token`.
 ```
 
 - You can see all your bookings (included the IDs) via `/user/getBookings` (it's a `GET` endpoint)
+
+## Pay a booking
+
+There are two ways for paying the booking, one from the client side, one from employee/admin side. Client side is supposed to have a check from the external payment system, meanwhile employee one, since it's operated locally (cash/card) at the teathre, there won't be any check.
+
+### POST: /api/booking/pay (client)
+### POST: /api/booking/internalPayment (employee/admin)
+
+#### Request
+```json
+{
+	"bookingId": "<bookingId>"
+}
+```
+
+> In case of mismatching user type for the scope
+
+```json
+{
+	"status": 403,
+	"message": "endpoint reserved for clients paying. for employee use /api/booking/internalPayment"
+}
+```
+```json
+{
+	"status": 403,
+	"message": "endpoint reserved for internal paying. for clients use /api/booking/pay"
+}
+```
