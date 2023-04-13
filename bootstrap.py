@@ -1,4 +1,3 @@
-from random import choice
 from lib.mongo.collection import MOVIE, SCREENTIME
 from lib.struct.__base import db
 from lib.struct.movie import Movie

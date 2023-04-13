@@ -17,11 +17,27 @@ async def user_makeAccount(request: Request) -> BaseHTTPResponse:
             "status": 400,
             "message": "invalid request - missing username or password on body"
         }, status=400)
+    if body.get("firstName") is None or body.get("lastname") is None:
+        return json({
+            "status": 400,
+            "message": "invalid request - missing firstName and/or lastname on body"
+        })
     # compiling struct
     user = User()
+    utype = body.get("usertype")
+    if utype is None:
+        user.usertype = UserType.CLIENT
+    else:
+        utype = int(utype)
+        if utype == 1:
+            utype = UserType.ADMIN
+        elif utype == 2:
+            utype = UserType.EMPLOYEE
+        else:
+            utype = UserType.CLIENT
+        user.usertype = utype 
     user.username = body.get("username")
     user.password = body.get("password")
-    user.usertype = UserType.CLIENT
     user.firstName = body.get("firstName")
     user.lastname = body.get("lastname")
     user.addOnDb()
