@@ -81,8 +81,9 @@ async def screens_add(request: Request) -> BaseHTTPResponse:
     screen.movie = Movie().getById(body.get("movieId"))
     screen.capacity = capacity
     screen.screenTime = body.get("screenTime")
-    screen.addOnDb()
+    _id = screen.addOnDb()
     return json({
         "status": 200,
-        "message": "ok."
+        "message": "ok.",
+        "id": _id
     })

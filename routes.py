@@ -18,13 +18,14 @@ from lib.utils.token import checkToken, TOKEN_HEADER
 from lib.routes.booking import booking_book, booking_pay, booking_internalPayment
 from lib.routes.screens import screens_getAll, screens_get, screens_add
 from lib.routes.user import user_makeAccount, user_login, user_getBookings, user_logout
-from lib.routes.movie import movie_get, movie_add
+from lib.routes.movie import movie_get, movie_add, movie_getAll
 
 BYPASS_TOKEN_CHECK = [
     "/api/user/makeAccount",
     "/api/user/login",
     "/api/screens/getAll",
     "/api/screens/get",
+    "/api/movies/getAll",
     "/api/movies/get"
 ]
 
@@ -59,7 +60,8 @@ async def data_not_found(request: Request, exception: Exception):
 def add_external_routes(app):
     # GET
     app.add_route(test, '/', methods=["GET"])
-    app.add_route(movie_get, "/api/movie/get", methods=["GET"])
+    app.add_route(movie_get, "/api/movies/get", methods=["GET"])
+    app.add_route(movie_getAll, "/api/movies/getAll", methods=["GET"])
     app.add_route(user_getBookings, "/api/user/getBookings", methods=["GET"])
     app.add_route(user_logout, "/api/user/logout", methods=["GET"])
     app.add_route(screens_getAll, "/api/screens/getAll", methods=["GET"])
@@ -69,7 +71,7 @@ def add_external_routes(app):
     app.add_route(booking_book, "/api/booking/book", methods=["POST"])
     app.add_route(booking_pay, "/api/booking/pay", methods=["POST"])
     app.add_route(booking_internalPayment, "/api/booking/internalPayment", methods=["POST"])
-    app.add_route(movie_add, "/api/movie/add", methods=["POST"])
+    app.add_route(movie_add, "/api/movies/add", methods=["POST"])
     app.add_route(screens_add, "/api/screens/add", methods=["POST"])
     app.add_route(user_makeAccount, "/api/user/makeAccount", methods=["POST"])
     app.add_route(user_login, "/api/user/login", methods=["POST"])

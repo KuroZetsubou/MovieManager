@@ -1,12 +1,12 @@
 {
     "_type": "export",
     "__export_format": 4,
-    "__export_date": "2023-04-11T16:57:33.399Z",
+    "__export_date": "2023-04-13T14:16:44.334Z",
     "__export_source": "insomnia.desktop.app:v2023.1.0",
     "resources": [{
             "_id": "req_487968224c0b4439abcf2f1a6150b221",
             "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
-            "modified": 1681232205151,
+            "modified": 1681394908636,
             "created": 1681203902901,
             "url": "http://localhost/",
             "name": "hello",
@@ -44,7 +44,7 @@
         {
             "_id": "req_d05e2e4bc6d54bf08ffc60b77e4b210c",
             "parentId": "fld_00e56bea88384bb8b6c6ccb2cdef357c",
-            "modified": 1681232205156,
+            "modified": 1681394908642,
             "created": 1681230338285,
             "url": "http://localhost/api/booking/book",
             "name": "booking/book",
@@ -86,7 +86,7 @@
         {
             "_id": "fld_00e56bea88384bb8b6c6ccb2cdef357c",
             "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
-            "modified": 1681232205151,
+            "modified": 1681394908636,
             "created": 1681232142759,
             "name": "booking",
             "description": "",
@@ -98,7 +98,7 @@
         {
             "_id": "req_c3f7820f68e34b8ba2f10efbdadbc506",
             "parentId": "fld_00e56bea88384bb8b6c6ccb2cdef357c",
-            "modified": 1681232205156,
+            "modified": 1681394908642,
             "created": 1681231067518,
             "url": "http://localhost/api/booking/pay",
             "name": "booking/pay",
@@ -135,7 +135,7 @@
         {
             "_id": "req_1f63a2ab28df46d8b07ba216c4d1a530",
             "parentId": "fld_00e56bea88384bb8b6c6ccb2cdef357c",
-            "modified": 1681232205156,
+            "modified": 1681394908642,
             "created": 1681231762420,
             "url": "http://localhost/api/booking/internalPayment",
             "name": "booking/internalPayment",
@@ -172,7 +172,7 @@
         {
             "_id": "req_0b0a459babae4351ac8bdbdacc73b411",
             "parentId": "fld_ffc0049411d04df08f5abcf034a53f86",
-            "modified": 1681232205156,
+            "modified": 1681394908642,
             "created": 1681222958025,
             "url": "http://localhost/api/screens/getAll",
             "name": "screens/getAll",
@@ -180,6 +180,51 @@
             "method": "GET",
             "body": {},
             "parameters": [],
+            "headers": [{
+                "id": "pair_86c059c865a5447190fd00c452b5f724",
+                "name": "",
+                "value": "",
+                "description": ""
+            }],
+            "authentication": {},
+            "metaSortKey": 200,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_ffc0049411d04df08f5abcf034a53f86",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681394908636,
+            "created": 1681232181481,
+            "name": "screens",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": 300,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_54239566d6cf4493a70d1d473ce58791",
+            "parentId": "fld_ffc0049411d04df08f5abcf034a53f86",
+            "modified": 1681395348856,
+            "created": 1681223004698,
+            "url": "http://localhost/api/screens/get",
+            "name": "screens/get",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [{
+                "id": "pair_337331e6452347f9ae557b183f83dba7",
+                "name": "screenId",
+                "value": "5bc713d48eeedc816a283409baea6545612b12c4465e2dcf2b462c8cb9a2672b",
+                "description": ""
+            }],
             "headers": [{
                 "id": "pair_86c059c865a5447190fd00c452b5f724",
                 "name": "",
@@ -198,27 +243,18 @@
             "_type": "request"
         },
         {
-            "_id": "fld_ffc0049411d04df08f5abcf034a53f86",
-            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
-            "modified": 1681232205151,
-            "created": 1681232181481,
-            "name": "screens",
-            "description": "",
-            "environment": {},
-            "environmentPropertyOrder": null,
-            "metaSortKey": 200,
-            "_type": "request_group"
-        },
-        {
-            "_id": "req_54239566d6cf4493a70d1d473ce58791",
+            "_id": "req_6e0dad44e1cd4f7397bb266d02220d90",
             "parentId": "fld_ffc0049411d04df08f5abcf034a53f86",
-            "modified": 1681232205156,
-            "created": 1681223004698,
-            "url": "http://localhost/api/screens/get",
-            "name": "screens/get",
+            "modified": 1681395184271,
+            "created": 1681394043817,
+            "url": "http://localhost/api/screens/add",
+            "name": "screens/add",
             "description": "",
-            "method": "GET",
-            "body": {},
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"movieId\": \"e7626ed9d901491f77cf407100f71d68e74d10015bcfbae838a3c9af78215ffb\",\n\t\"screenTime\": 1673378200,\n\t\"capacity\": 500\n}"
+            },
             "parameters": [{
                 "id": "pair_337331e6452347f9ae557b183f83dba7",
                 "name": "screenId",
@@ -226,11 +262,17 @@
                 "description": ""
             }],
             "headers": [{
-                "id": "pair_86c059c865a5447190fd00c452b5f724",
-                "name": "",
-                "value": "",
-                "description": ""
-            }],
+                    "id": "pair_86c059c865a5447190fd00c452b5f724",
+                    "name": "X-Token",
+                    "value": "2c252ec8-abbe-43d9-8304-90073666cd4f",
+                    "description": ""
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_a1b35807623d410f988a589c88163845"
+                }
+            ],
             "authentication": {},
             "metaSortKey": 0,
             "isPrivate": false,
@@ -245,7 +287,7 @@
         {
             "_id": "req_3c1a12a9aaa24d3090699f401ee3b45b",
             "parentId": "fld_bc9d04829b98421396eadb46cd812e3b",
-            "modified": 1681232205156,
+            "modified": 1681394908643,
             "created": 1681203920428,
             "url": "http://localhost/api/user/makeAccount",
             "name": "user/makeAccount",
@@ -253,7 +295,7 @@
             "method": "POST",
             "body": {
                 "mimeType": "application/json",
-                "text": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+                "text": "{\n\t\"username\": \"user\",\n\t\"password\": \"user\",\n\t\"firstName\": \"user\",\n\t\"lastname\": \"user\",\n\t\"usertype\": 3\n}"
             },
             "parameters": [],
             "headers": [{
@@ -261,7 +303,7 @@
                 "value": "application/json"
             }],
             "authentication": {},
-            "metaSortKey": 200,
+            "metaSortKey": 300,
             "isPrivate": false,
             "settingStoreCookies": true,
             "settingSendCookies": true,
@@ -274,19 +316,19 @@
         {
             "_id": "fld_bc9d04829b98421396eadb46cd812e3b",
             "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
-            "modified": 1681232205151,
+            "modified": 1681394908636,
             "created": 1681232195248,
             "name": "user",
             "description": "",
             "environment": {},
             "environmentPropertyOrder": null,
-            "metaSortKey": 300,
+            "metaSortKey": 400,
             "_type": "request_group"
         },
         {
             "_id": "req_458dc920403e42b7a0e7b964e4afff4e",
             "parentId": "fld_bc9d04829b98421396eadb46cd812e3b",
-            "modified": 1681232205156,
+            "modified": 1681394908643,
             "created": 1681214281377,
             "url": "http://localhost/api/user/login",
             "name": "user/login",
@@ -294,7 +336,7 @@
             "method": "POST",
             "body": {
                 "mimeType": "application/json",
-                "text": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+                "text": "{\n\t\"username\": \"user\",\n\t\"password\": \"user\"\n}"
             },
             "parameters": [],
             "headers": [{
@@ -315,7 +357,7 @@
         {
             "_id": "req_3ed343c099d845a091457b057ff037e7",
             "parentId": "fld_bc9d04829b98421396eadb46cd812e3b",
-            "modified": 1681232205156,
+            "modified": 1681394908643,
             "created": 1681218311307,
             "url": "http://localhost/api/user/getBookings",
             "name": "user/getBookings",
@@ -329,6 +371,150 @@
                 "value": "50bf62e2-0819-4813-84f9-ffb05c769cc6",
                 "description": ""
             }],
+            "authentication": {},
+            "metaSortKey": 0,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_728dce90239c496890afb21b4b754be4",
+            "parentId": "fld_bc9d04829b98421396eadb46cd812e3b",
+            "modified": 1681394908643,
+            "created": 1681392876106,
+            "url": "http://localhost/api/user/logout",
+            "name": "user/logout",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [{
+                "id": "pair_0c191fc102e2461fb8b33b59392213ac",
+                "name": "X-Token",
+                "value": "50bf62e2-0819-4813-84f9-ffb05c769cc6",
+                "description": ""
+            }],
+            "authentication": {},
+            "metaSortKey": 200,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_1857e6c1a97f48f49141ef42b3c09700",
+            "parentId": "fld_afb729b973b34e11b1d39097d537ca9c",
+            "modified": 1681394908642,
+            "created": 1681394536172,
+            "url": "http://localhost/api/movies/get",
+            "name": "movies/get",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [{
+                "id": "pair_337331e6452347f9ae557b183f83dba7",
+                "name": "movieId",
+                "value": "014ab8b3b3032ba25aa88eb03dbdef1a688ecb89852643b6f762c07958eaaabe",
+                "description": ""
+            }],
+            "headers": [{
+                "id": "pair_86c059c865a5447190fd00c452b5f724",
+                "name": "",
+                "value": "",
+                "description": ""
+            }],
+            "authentication": {},
+            "metaSortKey": 100,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_afb729b973b34e11b1d39097d537ca9c",
+            "parentId": "wrk_11274dbeb0a248df838cb7e22c1a61f2",
+            "modified": 1681394908636,
+            "created": 1681394525370,
+            "name": "movie",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": 200,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_bbc8910e31aa4d21bda0c3b78eb261c9",
+            "parentId": "fld_afb729b973b34e11b1d39097d537ca9c",
+            "modified": 1681394908642,
+            "created": 1681394695520,
+            "url": "http://localhost/api/movies/getAll",
+            "name": "movies/getAll",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [{
+                "id": "pair_86c059c865a5447190fd00c452b5f724",
+                "name": "",
+                "value": "",
+                "description": ""
+            }],
+            "authentication": {},
+            "metaSortKey": 200,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_3ebd80e5edde410f9c03fb0db1120eb4",
+            "parentId": "fld_afb729b973b34e11b1d39097d537ca9c",
+            "modified": 1681395157273,
+            "created": 1681394903073,
+            "url": "http://localhost/api/movies/add",
+            "name": "movies/add",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"movieName\": \"Piovono Polpette\"\n}"
+            },
+            "parameters": [{
+                "id": "pair_337331e6452347f9ae557b183f83dba7",
+                "name": "screenId",
+                "value": "a94a1dfbe4318a33fc8165b13536754bda30ead63d8ce59d9e15f47630422870",
+                "description": "",
+                "disabled": true
+            }],
+            "headers": [{
+                    "id": "pair_86c059c865a5447190fd00c452b5f724",
+                    "name": "X-Token",
+                    "value": "2c252ec8-abbe-43d9-8304-90073666cd4f",
+                    "description": ""
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_a1b35807623d410f988a589c88163845"
+                }
+            ],
             "authentication": {},
             "metaSortKey": 0,
             "isPrivate": false,

@@ -49,12 +49,14 @@ class ScreenTime:
     
     # add this instance on database
     def addOnDb(self):
+        _id = sha256(f"{self.screenTime}-{self.movie.id}-{self.capacity}".encode("utf8")).hexdigest()
         db.insert(SCREENTIME, {
-            "_id": sha256(f"{self.screenTime}-{self.movie.id}-{self.capacity}".encode("utf8")).hexdigest(),
+            "_id": _id,
             "screenTime": self.screenTime,
             "capacity": self.capacity,
             "movie": self.movie.id,
         })
+        return _id
 
     def toJson(self):
         return {

@@ -13,6 +13,17 @@ from lib.struct.screentime import ScreenTime
 from lib.utils.token import generateToken, getUserByToken, TOKEN_HEADER
 from lib.exceptions.UserNotFoundException import UserNotFoundException
 
+# GET: /api/movie/getAll
+async def movie_getAll(request: Request) -> BaseHTTPResponse:
+    temp = Movie().getAll()
+    movies = []
+    for entry in temp:
+        movies.append(entry.toJson())
+    return json({
+        "status": 200,
+        "screens": movies
+    })
+
 # GET: /api/movie/get
 async def movie_get(request: Request) -> BaseHTTPResponse:
     body = request.args
@@ -56,8 +67,9 @@ async def movie_add(request: Request) -> BaseHTTPResponse:
     movie = Movie()
     movie.omdbName = omdbName
     movie.movieName = body.get("movieName")
-    movie.addOnDb()
+    _id = movie.addOnDb()
     return json({
         "status": 200,
-        "message": "ok."
+        "message": "ok.",
+        "id": _id
     })

@@ -87,8 +87,9 @@ class Booking:
 
     def addOnDb(self):
         now = int(time())
+        _id = sha256(f"{self.screenTime.id}-{self.user.id}-{self.movie.id}".encode("utf8")).hexdigest()
         db.insert(BOOKING, {
-            "_id": sha256(f"{self.screenTime.id}-{self.user.id}-{self.movie.id}".encode("utf8")).hexdigest(),
+            "_id": _id,
             "paid": self.paid,
             "slots": self.slots,
             "user": self.user.id,
@@ -99,6 +100,7 @@ class Booking:
             'cancellingTime': None,
             'paidTime': None,
         })
+        return _id
 
     def toJson(self):
         return {

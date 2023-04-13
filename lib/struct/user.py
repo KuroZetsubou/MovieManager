@@ -65,8 +65,9 @@ class User:
     # add this instance on database
     def addOnDb(self):
         try:
+            _id = sha256(self.username.encode("utf8")).hexdigest()
             db.insert(USER, {
-                "_id": sha256(self.username.encode("utf8")).hexdigest(),
+                "_id": _id,
                 "username": self.username,
                 "password": self.__securePassword(self.password),
                 "usertype": self.usertype,
@@ -74,6 +75,7 @@ class User:
                 "lastname": self.lastname,
                 "tokens": self.tokens,
             })
+            return _id
         except DuplicateKeyError:
             raise UserExistsException(username=self.username)
 

@@ -40,10 +40,11 @@ async def booking_book(request: Request) -> BaseHTTPResponse:
     booking.movie = screenTime.movie
     booking.slots = [] if slots is None else slots
     try:
-        booking.addOnDb()
+        _id = booking.addOnDb()
         return json({
             "status": 200,
-            "message": "ok"
+            "message": "ok",
+            "id": _id
         })
     except DuplicateKeyError:
         return json({

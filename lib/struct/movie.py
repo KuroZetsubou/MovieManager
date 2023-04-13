@@ -31,6 +31,11 @@ class Movie:
             raise MovieNotFoundException(f"movie {movieName} not found")
         return self.__compileDataFromMongo(data)
     
+    # gets all upcoming screens
+    def getAll(self, toObject: bool = False):
+        data = db.findMany(MOVIE, {})
+        return self.__compileListFromMongo(data) if not toObject else data
+    
     def getRandom(self):
         data = db.random(MOVIE)
         return self.__compileDataFromMongo(data)
@@ -40,16 +45,29 @@ class Movie:
         self.omdbName = mongoResult["omdbName"]
         self.id = mongoResult["_id"]
         return self
+    
+    def __compileDataFromMongoAsExternal(self, mongoResult: object):
+        obj = Movie()
+        return obj.__compileDataFromMongo(mongoResult)
+    
+    def __compileListFromMongo(self, mongoList: list) -> list:
+        data = []
+        for entry in mongoList:
+            data.append(self.__compileDataFromMongoAsExternal(entry))
+        return data
 
     def addOnDb(self):
+        _id = sha256(f"{self.movieName}-{self.omdbName}".encode("utf8")).hexdigest()
         db.insert(MOVIE, {
-            "_id": sha256(f"{self.movieName}-{self.omdbName}".encode("utf8")).hexdigest(),
+            "_id": _id,
             "movieName": self.movieName,
             "omdbName": self.omdbName
         })
+        return _id
     
     def toJson(self):
         return {
+            "id": self.id,
             "movieName": self.movieName,
             "omdbName": self.omdbName
         }
