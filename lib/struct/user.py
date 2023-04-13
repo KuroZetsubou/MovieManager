@@ -77,10 +77,9 @@ class User:
         except DuplicateKeyError:
             raise UserExistsException(username=self.username)
 
-    # TODO
     # can be used also for verification
     def __securePassword(self, password: str) -> str:
-        return password
+        return sha256(f"{self.username}-{password}".encode("utf-8")).hexdigest()
     
     def checkPasswordFromPlaintext(self, plaintextPassword: str) -> bool:
         return self.__securePassword(plaintextPassword) == self.password
@@ -89,8 +88,19 @@ class User:
         if self.id is None:
             raise Exception("user is not defined from mongo.")
         self.tokens.append(token)
-        db.updateOne(USER, {"_id": self.id}, {"$set": {"tokens": self.tokens}})
+        self.__setToken()
         pass
+
+    def logout(self, token: str):
+        self.tokens.remove(token)
+        self.__setToken()
+
+    def revokeTokens(self):
+        self.tokens = []
+        self.__setToken()
+
+    def __setToken(self):
+        db.updateOne(USER, {"_id": self.id}, {"$set": {"tokens": self.tokens}})
         
     def toJson(self):
         return {

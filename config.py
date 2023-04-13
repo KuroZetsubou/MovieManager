@@ -15,3 +15,4 @@ SANIC_DEBUG = False
 
 # Application settings
 BOOKING_MAX_TIME_BEFORE = 3600 # amount of seconds before the screen time. gap allowed for clients before having it unavailable. it's bypassed only by employees (for local purchase of tickets)
+SCREENS_DEFAULT_CAPACITY = 300

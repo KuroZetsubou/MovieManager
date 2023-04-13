@@ -17,14 +17,15 @@ from lib.utils.token import checkToken, TOKEN_HEADER
 # routes import
 from lib.routes.booking import booking_book, booking_pay, booking_internalPayment
 from lib.routes.screens import screens_getAll, screens_get, screens_add
-from lib.routes.user import user_makeAccount, user_login, user_getBookings
+from lib.routes.user import user_makeAccount, user_login, user_getBookings, user_logout
 from lib.routes.movie import movie_get, movie_add
 
 BYPASS_TOKEN_CHECK = [
     "/api/user/makeAccount",
     "/api/user/login",
     "/api/screens/getAll",
-    "/api/screens/get"
+    "/api/screens/get",
+    "/api/movies/get"
 ]
 
 # some first inits
@@ -60,6 +61,7 @@ def add_external_routes(app):
     app.add_route(test, '/', methods=["GET"])
     app.add_route(movie_get, "/api/movie/get", methods=["GET"])
     app.add_route(user_getBookings, "/api/user/getBookings", methods=["GET"])
+    app.add_route(user_logout, "/api/user/logout", methods=["GET"])
     app.add_route(screens_getAll, "/api/screens/getAll", methods=["GET"])
     app.add_route(screens_get, "/api/screens/get", methods=["GET"])
 

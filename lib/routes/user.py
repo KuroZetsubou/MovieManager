@@ -84,3 +84,15 @@ async def user_getBookings(request: Request) -> BaseHTTPResponse:
         "status": 200,
         "bookings": bookings
     })
+
+# GET: /api/user/logout
+async def user_logout(request: Request) -> BaseHTTPResponse:
+    token = request.headers.get(TOKEN_HEADER)
+    user = getUserByToken(token)
+    if user is None:
+        raise UserNotFoundException("user not found")
+    user.logout(token)
+    return json({
+        "status": 200,
+        "message": "ok"
+    })
